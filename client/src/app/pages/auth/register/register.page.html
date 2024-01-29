@@ -1,0 +1,79 @@
+<ion-content [fullscreen]="true">
+
+  <ion-grid>
+
+    <ion-row class="ion-align-items-center ion-margin-top">
+
+      <ion-col size="4">
+        <ion-icon name="chevron-back-outline" style="font-size: 30px;"></ion-icon>
+      </ion-col>
+      <ion-col size="4">
+        <div class="outerDiv">
+          <div class="innerDiv">
+
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-grid class="ion-margin-top ion-margin-start">
+    <ion-row>
+      <ion-col>
+        <ion-text class="daftarText">
+
+          Log In
+
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <form [formGroup]="registerForm" (ngSubmit)="sendForm(registerForm)">
+  <ion-list>
+
+    <ion-item>
+      <ion-input formControlName="email" class="inputStyle" (keyup)="showButton($event)" placeholder="Email id"></ion-input>
+      <div *ngIf="registerForm.get('email')?.invalid && submitStatus">
+        <ion-text color="danger">Enter valid email</ion-text>
+      </div>
+    </ion-item>
+
+    <ion-text class="ion-text-center">
+      <div class="ion-margin-top">
+        OR
+      </div>
+    </ion-text>
+
+    <!-- <ion-item>
+      <ion-input formControlName="phone" label="+91"  class="inputStyle" (keypress)="go($event)" (paste)="onPaste($event)" type="tel" placeholder="Mobile Number" maxlength="10"></ion-input>
+      <div *ngIf="registerForm.get('phone')?.invalid && submitStatus">
+        <ion-text color="danger">Enter valid Number</ion-text>
+      </div>
+    </ion-item> -->
+
+  </ion-list>
+
+
+
+  <ion-text class="center-text">
+    <div class="textStyle">
+      By registering, you agree to our <span> Terms & Conditions</span> and <span>Privacy Policy</span>
+    </div>
+  </ion-text>
+
+  <ion-button id="open-loading" type="submit" expand="block" class="nextButton" [disabled]="buttonStatus">Continue</ion-button>
+  <div *ngIf="registerForm.valid">
+    <ion-loading trigger="open-loading" message="Loading..." [duration]="2500" spinner="circles"></ion-loading>
+  </div>
+
+</form>
+  <ion-text class="center-text">
+    <div class="textStyle" style="width: 200px; margin-top: 50px; font-size: 14px;">
+      Already have an account? <span>Log in</span>
+    </div>
+  </ion-text>
+
+
+</ion-content>

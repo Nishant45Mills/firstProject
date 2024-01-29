@@ -1,0 +1,56 @@
+ion-content{
+
+    --background:#7A1FA0;
+}
+
+.topMargin {
+
+    margin-top: 80px;
+}
+
+.textStyle {
+
+    font-family: Inter;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 20px; /* 100% */
+}
+
+.contentStyle {
+
+    font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 142.857% */
+width: 300px;
+}
+
+.buttonStyle {
+
+    --background: #fff;
+    width: 249px;
+    height: 53px;
+    margin: auto;
+    margin-top: 40px;
+    color: #7A1FA0;
+}
+
+.buttonStyle1 {
+    width: 249px;
+    height: 53px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+#overlayDiv {
+
+    position: relative;
+}
+
+#imageData {
+
+    position: absolute;
+    z-index: 1;
+}

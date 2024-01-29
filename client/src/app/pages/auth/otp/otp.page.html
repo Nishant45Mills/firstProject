@@ -1,0 +1,58 @@
+<ion-content> <ion-grid>
+
+    <ion-row class="ion-align-items-center ion-margin-top">
+
+      <ion-col size="4">
+        <ion-icon name="chevron-back-outline" style="font-size: 30px;"></ion-icon>
+      </ion-col>
+      <ion-col size="4">
+        <div class="outerDiv">
+          <div class="innerDiv">
+
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center ion-margin-top">
+      <ion-col size="9">
+        <ion-text class="ion-text-center">
+          <p class="textStyle1">Email Verification</p>
+          <p class="content">Swosh! Lightning McQueen, the OTP code has been sent to your parent's email, right.
+          </p>
+          <div>
+            <span>{{email}}</span>
+          </div>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center ion-margin-top">
+      <ion-col size="2">
+        <ion-input type="number" maxlength="1" style="border: 1px solid grey;font-size: 30px; text-align: center;"
+          #firstBox (keyup)="movePointer('',firstBox,secondBox,$event)"></ion-input>
+      </ion-col>
+      <ion-col size="2">
+        <ion-input type="number" style="border: 1px solid grey;font-size: 30px; text-align: center;" #secondBox
+          (keyup)="movePointer(firstBox,secondBox,thirdBox,$event)"></ion-input>
+      </ion-col>
+      <ion-col size="2">
+        <ion-input type="number" style="border: 1px solid grey;font-size: 30px; text-align: center;" #thirdBox
+          (keyup)="movePointer(secondBox,thirdBox,fourthBox,$event)"></ion-input>
+      </ion-col>
+      <ion-col size="2">
+        <ion-input type="number" style="border: 1px solid grey;font-size: 30px; text-align: center;" #fourthBox
+          (keyup)="movePointer(thirdBox,fourthBox,'',$event)"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-text class="ion-text-center" style="margin: 10px;">
+      <div class="otpTextStyle">
+        Have not received the OTP code? <span>Resend</span>
+      </div>
+    </ion-text>
+
+    <ion-button expand="block" class="nextButton" routerLink="/auth/success">Verification</ion-button>
+
+  </ion-grid>
+</ion-content>

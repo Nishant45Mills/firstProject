@@ -1,0 +1,78 @@
+.imageTopMargin {
+
+    margin-top: 70px;
+}
+
+.MainQuate {
+
+    color: #7A1FA0;
+
+    text-align: center;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22px;
+    /* 137.5% */
+}
+
+.quateDecription {
+
+    color: #5E5B5B;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17px;
+    /* 141.667% */
+}
+
+.signUpButton {
+    --border-radius: 10px;
+    --background: #7A1FA0;
+    width: 300px;
+    height: 53px;
+    margin: auto;
+    margin-top: 50px;
+
+}
+
+.lines {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+}
+
+.lines span {
+    background: #fff;
+    padding: 0 0px;
+}
+
+.data {
+
+    background-color: #D4D4D4;
+    height: 2px;
+}
+
+.lineText {
+
+    color: #ADABAB;
+}
+
+.signInButton {
+    --border-radius: 10px;
+    --background: white;
+    width: 300px;
+    height: 53px;
+    font-size: 13px;
+    --color: #7A1FA0;
+    box-shadow: none;
+    border-radius: 1.5rem;
+    margin: auto;
+}
+
+ion-button::part(native) {
+    border: 1px solid #7A1FA0 !important;
+}

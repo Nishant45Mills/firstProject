@@ -1,0 +1,114 @@
+.outerDiv {
+
+    position: relative;
+    width: 80px;
+    height: 13px;
+    background-color: #d5cdd8;
+    border-radius: 10px;
+    margin-left: 15px;
+
+}
+
+.innerDiv {
+
+    position: absolute;
+    width: 40px;
+    height: 13px;
+    background-color: #7A1FA0;
+    left: 0px;
+    animation-name: moveInnerDiv;
+    animation-iteration-count: 1;
+    border-radius: 10px;
+    animation-fill-mode: forwards;
+
+}
+
+.textStyle1 {
+
+    color: #7A1FA0;
+
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.content {
+
+    color: #716F6F;
+
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 147.023%; /* 20.583px */}
+
+    span {
+
+        font-weight: bold;
+    }
+
+    ion-input {
+
+        --highlight-color-focused: none;
+
+    }
+
+// ion-item {
+
+//     --highlight-color-focused: none;
+//     --highlight-height:0px;
+// }
+
+.otpTextStyle {
+
+    color: #5E5B5B;
+
+text-align: center;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 135.523%; /* 18.973px */
+}
+
+.otpTextStyle>span {
+
+    color: #7A1FA0;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 135.523%;
+}
+
+.nextButton {
+
+    --border-radius: 10px;
+    --background: #7A1FA0;
+    width: 300px;
+    height: 53px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+ion-content {
+
+    --background: linear-gradient(white, white, white, white, #e5cdf0);
+}
+
+@keyframes moveInnerDiv {
+
+    0% {
+
+        left: 0px;
+    }
+
+    100% {
+
+        left: 40px;
+    }
+
+}
