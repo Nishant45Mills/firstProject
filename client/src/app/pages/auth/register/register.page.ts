@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { HttpService } from 'src/app/services/http.service';
+import { AuthService } from 'src/app/services/auth.service';
+
+
 
 @Component({
   selector: 'app-register',
@@ -11,17 +15,19 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class RegisterPage implements OnInit {
 
-  buttonStatus = true;
+  buttonStatus = false;
+  public recaptchaVerifier?: firebase.auth.RecaptchaVerifier;
+
   registerForm: FormGroup = this.fb.group({
 
     email: ['', [Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-    // phone: ['', [Validators.minLength(10)]],
+    phone: ['', [Validators.minLength(10)]],
   });
   password: string = '';
   showPassword: boolean = false;
   submitStatus = false;
 
-  constructor(private fb: FormBuilder, private route: Router, private toastController: ToastController, private http: HttpService) { }
+  constructor(private fb: FormBuilder, private route: Router, private toastController: ToastController, private http: HttpService,private authService:AuthService) { }
 
   // async presentToast(position: 'top' | 'middle' | 'bottom') {
   //     const toast = await this.toastController.create({
@@ -37,6 +43,48 @@ export class RegisterPage implements OnInit {
   // }
 
   ngOnInit() {
+    
+  }
+
+ ionViewDidEnter() {
+		this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+			size: 'invisible',
+			callback: (response: any) => {
+				console.log(response);
+				console.log(this.recaptchaVerifier);
+			},
+			'expired-callback': () => {}
+		});
+
+    
+	}
+
+	ionViewDidLoad() {
+		this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+			size: 'invisible',
+			callback: (response: any) => {
+				console.log(response);
+				console.log(this.recaptchaVerifier);
+			},
+			'expired-callback': () => {}
+		});
+	}
+
+  signinWithPhoneNumber() {
+    console.log('+91' + this.registerForm.controls['phone'].value);
+    console.log(this.recaptchaVerifier);
+    
+    if (this.registerForm.controls['phone'].value!='') {
+      
+      this.authService.signInWithPhoneNumber(this.recaptchaVerifier, '+91' + this.registerForm.controls['phone'].value).then(
+        success => {
+          // this.OtpVerification();
+          console.log(success);
+          this.route.navigate(['/auth/otp'],{ queryParams: this.registerForm.value });
+          
+        }
+      );
+    }
   }
 
   showButton(event: any) {
@@ -77,7 +125,7 @@ export class RegisterPage implements OnInit {
 
     this.submitStatus = true;
 
-    if (this.registerForm.valid) {
+    if (this.registerForm.controls['email'].value!='') {      
 
       this.http.post('/auth/register', this.registerForm.value).subscribe((data) => {
 
@@ -85,6 +133,11 @@ export class RegisterPage implements OnInit {
 
       })
 
+    }
+
+    else {
+      
+      this.signinWithPhoneNumber();
     }
   }
 

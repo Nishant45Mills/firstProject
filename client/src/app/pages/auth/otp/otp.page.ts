@@ -20,8 +20,15 @@ export class OtpPage implements OnInit {
 
     this.activateRoute.queryParams.subscribe((data) => {
 
+      if(data['email']!='') {
       this.email = data['email'];
+      }
 
+      else {
+
+this.email = '+91' + data['phone'];
+
+      }
     })
   }
 
