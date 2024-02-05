@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegisterPage implements OnInit {
 
-  buttonStatus = false;
+  buttonStatus = true;
   public recaptchaVerifier?: firebase.auth.RecaptchaVerifier;
 
   registerForm: FormGroup = this.fb.group({
@@ -27,7 +27,7 @@ export class RegisterPage implements OnInit {
   showPassword: boolean = false;
   submitStatus = false;
 
-  constructor(private fb: FormBuilder, private route: Router, private toastController: ToastController, private http: HttpService,private authService:AuthService) { }
+  constructor(private fb: FormBuilder, private route: Router, private toastController: ToastController, private http: HttpService, private authService: AuthService) { }
 
   // async presentToast(position: 'top' | 'middle' | 'bottom') {
   //     const toast = await this.toastController.create({
@@ -43,45 +43,46 @@ export class RegisterPage implements OnInit {
   // }
 
   ngOnInit() {
-    
+
   }
 
- ionViewDidEnter() {
-		this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-			size: 'invisible',
-			callback: (response: any) => {
-				console.log(response);
-				console.log(this.recaptchaVerifier);
-			},
-			'expired-callback': () => {}
-		});
+  ionViewDidEnter() {
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+      size: 'invisible',
+      callback: (response: any) => {
+        console.log(response);
+        console.log(this.recaptchaVerifier);
+      },
+      'expired-callback': () => { }
+    });
 
-    
-	}
 
-	ionViewDidLoad() {
-		this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-			size: 'invisible',
-			callback: (response: any) => {
-				console.log(response);
-				console.log(this.recaptchaVerifier);
-			},
-			'expired-callback': () => {}
-		});
-	}
+  }
+
+  ionViewDidLoad() {
+    this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+      size: 'invisible',
+      callback: (response: any) => {
+        console.log(response);
+        console.log(this.recaptchaVerifier);
+      },
+      'expired-callback': () => { }
+    });
+  }
 
   signinWithPhoneNumber() {
     console.log('+91' + this.registerForm.controls['phone'].value);
     console.log(this.recaptchaVerifier);
-    
-    if (this.registerForm.controls['phone'].value!='') {
-      
+
+    if (this.registerForm.controls['phone'].value != '') {
+
       this.authService.signInWithPhoneNumber(this.recaptchaVerifier, '+91' + this.registerForm.controls['phone'].value).then(
         success => {
           // this.OtpVerification();
           console.log(success);
-          this.route.navigate(['/auth/otp'],{ queryParams: this.registerForm.value });
-          
+          localStorage.setItem('verificationId',success['verificationId']);
+          this.route.navigate(['/auth/otp'], { queryParams: this.registerForm.value });
+
         }
       );
     }
@@ -100,7 +101,7 @@ export class RegisterPage implements OnInit {
     }
 
     this.submitStatus = false;
-
+    this.registerForm.controls['phone'].reset('');
 
   }
 
@@ -125,18 +126,24 @@ export class RegisterPage implements OnInit {
 
     this.submitStatus = true;
 
-    if (this.registerForm.controls['email'].value!='') {      
+    if (this.registerForm.controls['email'].value != '') {
+
+      console.log("in correct path");
+      
 
       this.http.post('/auth/register', this.registerForm.value).subscribe((data) => {
-
+        
+        localStorage.setItem('formStatus','true');
         this.route.navigate([`/auth/otp`], { queryParams: data1.value });
 
       })
 
+      console.log(this.registerForm.controls['email'].value);
     }
 
     else {
-      
+      console.log("in otp");
+
       this.signinWithPhoneNumber();
     }
   }
@@ -144,6 +151,22 @@ export class RegisterPage implements OnInit {
   togglePasswordVisibility() {
 
     this.showPassword = !this.showPassword;
+  }
+
+  enterNo(event: any) {
+
+    this.registerForm.controls['email'].reset('');
+
+    if (event.target.value != '') {
+
+      this.buttonStatus = false;
+    }
+
+    else {
+
+      this.buttonStatus = true;
+    }
+
   }
 
 }

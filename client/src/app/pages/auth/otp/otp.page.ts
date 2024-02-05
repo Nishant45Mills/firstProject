@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { HttpService } from 'src/app/services/http.service';
 
@@ -8,25 +8,26 @@ import { HttpService } from 'src/app/services/http.service';
   templateUrl: './otp.page.html',
   styleUrls: ['./otp.page.scss'],
 })
-export class OtpPage implements OnInit {
+export class OtpPage implements OnInit, OnDestroy {
   getValue: any;
   email: any;
-  otpData:any = '';
+  otpData: any = '';
   buttonStatus = true;
+  message = '';
 
-  constructor(private activateRoute: ActivatedRoute,private http:HttpService) { }
+  constructor(private activateRoute: ActivatedRoute, private http: HttpService, private route: Router) { }
 
   ngOnInit() {
 
     this.activateRoute.queryParams.subscribe((data) => {
 
-      if(data['email']!='') {
-      this.email = data['email'];
+      if (data['email'] != '') {
+        this.email = data['email'];
       }
 
       else {
 
-this.email = '+91' + data['phone'];
+        this.email = '+91' + data['phone'];
 
       }
     })
@@ -36,17 +37,26 @@ this.email = '+91' + data['phone'];
 
     const user = {
 
-      email:this.email,
-      otp:this.otpData
+      email: this.email,
+      otp: this.otpData
     }
 
-    console.log(user);
-    
+    console.log(this.otpData);
 
-    this.http.post('/auth/verifyOtp',user).subscribe((data)=>{
 
-      console.log(data);
-      
+    this.http.post('/auth/verifyOtp', user).subscribe({
+      next: (data: any) => {
+
+        console.log(data);
+        localStorage.setItem('token', data['accessToken']);
+        this.route.navigate(['/home']);
+
+      }, error: (err) => {
+
+        console.log(err);
+        this.message = "Invalid OTP"
+
+      }
     })
 
   }
@@ -71,7 +81,7 @@ this.email = '+91' + data['phone'];
       }
 
       if (n != '') {
-        
+
         n.setFocus();
 
       }
@@ -83,6 +93,10 @@ this.email = '+91' + data['phone'];
       }
 
     }
+  }
+
+  ngOnDestroy(): void {
+    localStorage.removeItem('formStatus');
   }
 
 }

@@ -8,11 +8,7 @@ const generateAccessToken = async (user) => {
 
     const secret = 'Millie@45';
     const options = { expiresIn: '1h' };
-
-
-    console.log(typeof payload);
-    console.log(typeof user);
-
+    
     return jwt.sign(payload, secret, options);
 }
 

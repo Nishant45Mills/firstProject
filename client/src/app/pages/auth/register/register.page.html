@@ -48,7 +48,7 @@
       </ion-text>
 
       <ion-item>
-      <ion-input formControlName="phone" label="+91"  class="inputStyle" (paste)="onPaste($event)" type="tel" placeholder="Mobile Number" maxlength="10"></ion-input>
+      <ion-input formControlName="phone" label="+91"  class="inputStyle" (keyup)="enterNo($event)" (paste)="onPaste($event)" type="tel" placeholder="Mobile Number" maxlength="10"></ion-input>
       <div *ngIf="registerForm.get('phone')?.invalid && submitStatus">
         <ion-text color="danger">Enter valid Number</ion-text>
       </div>
